@@ -29,3 +29,23 @@ typedef struct liste_s {
 cell_t* create_cell(int B, cell_t *next);
 
 void insert_cell(cell_t *head, int B);
+
+
+/*
+ * @func deletes a liste
+ * @param cell_t is the head of the list to deletes
+ * @ret 
+ */
+void delete_list(cell_t *head);
+
+
+
+
+
+
+
+
+
+
+
+
