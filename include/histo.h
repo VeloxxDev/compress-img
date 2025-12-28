@@ -39,6 +39,12 @@ void insert_cell(cell_t *head, int B);
 void delete_list(cell_t *head);
 
 
+/*
+ * @func creates a 256x256 histogram
+ */
+histo create_histo();
+
+
 
 
 

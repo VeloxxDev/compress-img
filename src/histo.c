@@ -105,3 +105,27 @@ int main() {
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============= Fonctions Histo (Yann) =============== */
+
+histo create_histo() {
+    histo new_histo = malloc(256*256*sizeof(cell_t*));
+    for (int r=0;r<256;r++) {
+        for (int g=0;g<256;g++) {
+            histo[r][g] = NULL;
+        }
+    }
+}
+
+
