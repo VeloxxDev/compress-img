@@ -44,7 +44,15 @@ void delete_list(cell_t *head);
  */
 histo create_histo();
 
+/*
+ * @func Initialisation of the histogram.
+ */
+void init_histo(histo h, FILE* img);
 
+/*
+ *
+ */
+void delete_histo(histo h);
 
 
 
