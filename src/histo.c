@@ -128,4 +128,16 @@ histo create_histo() {
     }
 }
 
+void init_histo(histo h,FILE* image) {
+    /* TODO Jsp comment traiter les images */
+    
+}
+
+void delete_histo(histo h) {
+    for (int r=0;r<256;r++) {
+        for (int g=0;g<256;g++) {
+            delete_list(histo[r][g]);
+        }
+    }
+}
 
