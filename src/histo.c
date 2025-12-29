@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "image.h"
+#include "histo.h"
 
 typedef struct cell_s cell_t;
 struct cell_s {
@@ -119,16 +120,16 @@ int main() {
 
 /* ============= Fonctions Histo (Yann) =============== */
 
-histo create_histo() {
-    histo new_histo = malloc(256*256*sizeof(cell_t*));
+histo_t create_histo() {
+    histo_t new_histo = malloc(256*256*sizeof(cell_t*));
     for (int r=0;r<256;r++) {
         for (int g=0;g<256;g++) {
-            histo[r][g] = NULL;
+            new_histo[r][g] = NULL;
         }
     }
 }
 
-void init_histo(histo h,Image* image) {
+void init_histo(histo_t h,Image* image) {
     for (int i = 0; i < image->height; i++) {
         for (int j = 0; j < image->width; j++) {
 
@@ -136,20 +137,20 @@ void init_histo(histo h,Image* image) {
             unsigned char G = image->pixels[i][j].G;
             unsigned char B = image->pixels[i][j].B;
 
-            insert_cell(&histo[R][G], B);
+            insert_cell(&h[R][G], B);
         }
     }
 }
 
-void delete_histo(histo h) {
+void delete_histo(histo_t h) {
     for (int r=0;r<256;r++) {
         for (int g=0;g<256;g++) {
-            delete_list(histo[r][g]);
+            delete_list(h[r][g]);
         }
     }
 }
 
-int give_freq_histo(histo h,int R,int G,int B) {
+int give_freq_histo(histo_t h,int R,int G,int B) {
     if (h[R][G] == NULL) {
         return 0;
     }
@@ -171,7 +172,7 @@ int give_freq_histo(histo h,int R,int G,int B) {
 
 /* ======= Partie histo_iter ========= */
 
-histo_iter create_histo_iter(cell_t *histo[256][256]) {
+histo_iter create_histo_iter(cell_t *h[256][256]) {
     histo_iter it = malloc(sizeof(histo_iter_s));
     if (it == NULL) {
         perror("Malloc failure");
@@ -180,10 +181,10 @@ histo_iter create_histo_iter(cell_t *histo[256][256]) {
 
     for (int R = 0; R < 256; R++) {
         for (int G = 0; G < 256; G++) {
-            if (histo[R][G] != NULL) {
+            if (h[R][G] != NULL) {
                 it->R = R;
                 it->G = G;
-                it->current = histo[R][G];
+                it->current = h[R][G];
                 return it;
             }
         }
@@ -229,7 +230,7 @@ boolean next_histo_iter(histo_iter it) {
 void give_color_histo_iter(histo_iter it,int* tab) {
     tab[0] = it->R;
     tab[1] = it->G;
-    tab[2] = it->current->B;  // selon ta struct cell
+    tab[2] = it->current->B;
 }
 
 void delete_histo_iter(histo_iter it) {

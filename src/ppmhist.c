@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
     }
 
     image_t img = load_pnm(argv[1]);
-    histo h = create_histo(img);
+    histo_t h = create_histo(img);
 
     histo_iter it = create_histo_iter(h);
 
@@ -22,7 +22,6 @@ int main(int argc, char **argv) {
         int R = rgb[0];
         int G = rgb[1];
         int B = rgb[2];
-
         int lum = (R + G + B) / 3;
         int freq = give_freq_histo(h, R, G, B);
 
