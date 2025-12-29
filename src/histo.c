@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "image.h"
 
 typedef struct cell_s cell_t;
 struct cell_s {
@@ -128,9 +128,17 @@ histo create_histo() {
     }
 }
 
-void init_histo(histo h,FILE* image) {
-    /* TODO Jsp comment traiter les images */
-    
+void init_histo(histo h,Image* image) {
+    for (int i = 0; i < image->height; i++) {
+        for (int j = 0; j < image->width; j++) {
+
+            unsigned char R = image->pixels[i][j].R;
+            unsigned char G = image->pixels[i][j].G;
+            unsigned char B = image->pixels[i][j].B;
+
+            insert_cell(&histo[R][G], B);
+        }
+    }
 }
 
 void delete_histo(histo h) {
@@ -140,4 +148,49 @@ void delete_histo(histo h) {
         }
     }
 }
+
+int give_freq_histo(histo h,int R,int G,int B) {
+    if (h[R][G] == NULL) {
+        return 0;
+    }
+
+    cell_t* current;
+    current = h[R][G];
+    while (current != NULL) {
+        if (current -> B == B) {
+            return current.freq;
+        }
+        if (current -> B > B) {
+            return 0;
+        }
+        current = current -> next;
+        
+    }
+    return 0;
+}
+
+/* ======= Partie histo_iter ========= */
+
+histo_iter create_histo_iter(cell_t *histo[256][256]) {
+    histo_iter it = malloc(sizeof(histo_iter_s));
+    if (it == NULL) {
+        perror("Malloc failure");
+        return NULL;
+    }
+
+    for (int R = 0; R < 256; R++) {
+        for (int G = 0; G < 256; G++) {
+            if (histo[R][G] != NULL) {
+                it->R = R;
+                it->G = G;
+                it->current = histo[R][G];
+                return it;
+            }
+        }
+    }
+    
+    perror("Empty histo");
+    return NULL;
+}
+    
 

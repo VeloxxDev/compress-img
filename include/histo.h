@@ -21,6 +21,23 @@ typedef struct liste_s {
 } liste_t;
 
 /*
+ *  Histo structure.
+ */
+typedef cell_t* histo_t[256][256];
+
+/*
+ * Structure of histo_iter_s and his pointeur histo_iter bellow.
+ */
+typedef struct histo_iter_s {
+    int R;
+    int G;
+    cell_t *current;
+} histo_iter_s;
+
+typedef histo_iter_s* histo_iter;
+
+
+/*
  *  @func This function creates a new cell
  *  @param B is a int wich represents the value for blue in 
  *   the cell
@@ -50,10 +67,19 @@ histo create_histo();
 void init_histo(histo h, FILE* img);
 
 /*
- *
+ * func Suppression of histo.
  */
 void delete_histo(histo h);
 
+/*
+ *
+ */
+int give_freq_histo(histo h,int R, int G, int B); 
+
+/*
+ *
+ */
+histo_iter create_histo_iter();
 
 
 
