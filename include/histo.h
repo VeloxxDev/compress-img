@@ -1,6 +1,7 @@
 #ifndef HISTO
 #define HISTO
 
+#include <stdio.h>
 
 /*
  *  Cells structure for the histogram
@@ -12,13 +13,6 @@ struct cell_s {
     struct cell_s *next;
 };
 
-/*
- *  Structure of the cell liste
- */
-typedef struct liste_s {
-    cell_t *tete;
-    cell_t *queue;
-} liste_t;
 
 /*
  *  Histo structure.
@@ -37,6 +31,8 @@ typedef struct histo_iter_s {
 typedef histo_iter_s* histo_iter;
 
 typedef enum {false,true} boolean;
+
+
 /*
  *  @func This function creates a new cell
  *  @param B is a int wich represents the value for blue in 
@@ -59,27 +55,27 @@ void delete_list(cell_t *head);
 /*
  * @func creates a 256x256 histogram
  */
-histo create_histo();
+histo_t create_histo();
 
 /*
  * @func Initialisation of the histogram.
  */
-void init_histo(histo h, FILE* img);
+void init_histo(histo_t h, Image *img);
 
 /*
  * func Suppression of histo.
  */
-void delete_histo(histo h);
+void delete_histo(histo_t h);
 
 /*
  *
  */
-int give_freq_histo(histo h,int R, int G, int B); 
+int give_freq_histo(histo_t h,int R, int G, int B); 
 
 /*
  *
  */
-histo_iter create_histo_iter();
+histo_iter create_histo_iter(histo_t h);
 
 /*
  *
@@ -89,13 +85,13 @@ void start_histo_iter(histo_iter it);
 /*
  *
  */
-boolean next_histo_iter(histo_iter h);
+boolean next_histo_iter(histo_iter it);
 
 
 /*
  *
  */
-void give_color_histo_iter(histo_iter it, int* tab);
+void give_color_histo_iter(histo_iter it, int *tab);
 
 /*
  *
@@ -103,4 +99,4 @@ void give_color_histo_iter(histo_iter it, int* tab);
 void delete_histo_iter(histo_iter it);
 
 
-
+#endif
