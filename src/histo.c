@@ -192,5 +192,75 @@ histo_iter create_histo_iter(cell_t *histo[256][256]) {
     perror("Empty histo");
     return NULL;
 }
+   
+void start_histo_iter(histo_iter it) {
+    /* 
+     * @TODO Impossible à implémenter pour l'instant car on ne 
+     * sauvegarde nul part la postion initiale...
+     */
+}
+
+boolean next_histo_iter(histo_iter it) {
+    int R,G;
+    R = it -> R;
+    G = it -> G;
     
+    if (it -> current -> next != NULL) {
+        it -> current = it -> current -> next;
+        return true;
+    }
+
+    else {
+        if (R < 256) {
+            R += R;
+            return true;
+        }
+        else if (R == 256) {
+            if (G < 256)
+                G += G;
+                R = 0;
+                return true;
+            }
+        }   
+    }
+    return false;
+}
+
+void give_color_histo_iter(histo_iter it,int* tab) {
+    tab[0] = it->R;
+    tab[1] = it->G;
+    tab[2] = it->current->B;  // selon ta struct cell
+}
+
+void delete_histo_iter(histo_iter it) {
+    if (it != NULL) {
+        free(it);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
