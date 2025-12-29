@@ -2,6 +2,7 @@
 #define HISTO
 
 #include <stdio.h>
+#include <image.h>
 
 /*
  *  Cells structure for the histogram
@@ -17,7 +18,8 @@ struct cell_s {
 /*
  *  Histo structure.
  */
-typedef cell_t* histo_t[256][256];
+typedef cell_t** histo_t;
+
 
 /*
  * Structure of histo_iter_s and his pointeur histo_iter bellow.

@@ -3,13 +3,6 @@
 #include "image.h"
 #include "histo.h"
 
-typedef struct cell_s cell_t;
-struct cell_s {
-    unsigned char B;
-    int freq;
-    struct cell_s *next;
-};
-
 typedef struct liste_s {
     cell_t *tete;
     cell_t *queue;
@@ -121,14 +114,17 @@ int main() {
 /* ============= Fonctions Histo (Yann) =============== */
 
 histo_t create_histo() {
-    histo_t new_histo = malloc(256*256*sizeof(cell_t*));
-    for (int r=0;r<256;r++) {
-        for (int g=0;g<256;g++) {
-            new_histo[r][g] = NULL;
+    histo_t h = malloc(256 * sizeof(cell_t**));
+
+    for (int r = 0; r < 256; r++) {
+        h[r] = malloc(256 * sizeof(cell_t*));
+        for (int g = 0; g < 256; g++) {
+            h[r][g] = NULL;
         }
     }
-}
 
+    return h;
+}
 void init_histo(histo_t h,Image* image) {
     for (int i = 0; i < image->height; i++) {
         for (int j = 0; j < image->width; j++) {
@@ -172,7 +168,7 @@ int give_freq_histo(histo_t h,int R,int G,int B) {
 
 /* ======= Partie histo_iter ========= */
 
-histo_iter create_histo_iter(cell_t *h[256][256]) {
+histo_iter create_histo_iter(histo_t h) {
     histo_iter it = malloc(sizeof(histo_iter_s));
     if (it == NULL) {
         perror("Malloc failure");
@@ -201,36 +197,40 @@ void start_histo_iter(histo_iter it) {
      */
 }
 
-boolean next_histo_iter(histo_iter it) {
-    int R,G;
-    R = it -> R;
-    G = it -> G;
-    
-    if (it -> current -> next != NULL) {
-        it -> current = it -> current -> next;
-        return true;
-    }
-
-    else {
-        if (R < 256) {
-            R += R;
-            return true;
-        }
-        else if (R == 256) {
-            if (G < 256)
-                G += G;
-                R = 0;
-                return true;
-            }
-        }   
-    }
-    return false;
-}
 
 void give_color_histo_iter(histo_iter it,int* tab) {
     tab[0] = it->R;
     tab[1] = it->G;
     tab[2] = it->current->B;
+}
+
+boolean next_histo_iter(histo_iter it, histo_t h) {
+
+    if (it->current->next != NULL) {
+        it->current = it->current->next;
+        return true;
+    }
+
+    for (int R = it->R; R < 256; R++) {
+
+        int startG;
+        if (R == it->R) {
+            startG = it->G + 1;   
+        } else {
+            startG = 0;      
+        }
+
+        for (int G = startG; G < 256; G++) {
+            if (h[R][G] != NULL) {
+                it->R = R;
+                it->G = G;
+                it->current = h[R][G];
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 void delete_histo_iter(histo_iter it) {
