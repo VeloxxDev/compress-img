@@ -1,4 +1,3 @@
-/bin/bash: line 1: :w: command not found
 CFLAGS = -Wall -Wextra -std=c99 -Iinclude
 
 SRC = src/histo.c src/image.c src/ppmhist.c
