@@ -25,7 +25,7 @@ void load_pixels_binary(FILE* fin, Image* image);
 
 void load_pixels(FILE* fin, Image* image); 
 
-Image* load_pnm(char* filename); 
+Image* load_pnm(FILE* fin); 
 
 void free_image(Image* img);
 

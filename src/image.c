@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fonctions.h"
+#include "image.h"
 
 Image* init_image() {
     Image* image = malloc(sizeof(Image));
@@ -103,8 +103,7 @@ void load_pixels(FILE* fin, Image* image) {
     }
 }
 
-Image* load_pnm(char* filename) {
-    FILE* fin = fopen(filename, "rb");
+Image* load_pnm(FILE* fin) {
     if (!fin) return NULL;
 
     Image* image = init_image();
@@ -118,7 +117,6 @@ Image* load_pnm(char* filename) {
 
     loader(fin, image); 
 
-    fclose(fin);
     return image;
 }
 
