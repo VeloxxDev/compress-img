@@ -36,7 +36,7 @@ typedef struct histo_iter_s {
 
 typedef histo_iter_s* histo_iter;
 
-
+typedef enum {false,true} boolean;
 /*
  *  @func This function creates a new cell
  *  @param B is a int wich represents the value for blue in 
@@ -81,11 +81,26 @@ int give_freq_histo(histo h,int R, int G, int B);
  */
 histo_iter create_histo_iter();
 
+/*
+ *
+ */
+void start_histo_iter(histo_iter it);
+
+/*
+ *
+ */
+boolean next_histo_iter(histo_iter h);
 
 
+/*
+ *
+ */
+void give_color_histo_iter(histo_iter it, int* tab);
 
-
-
+/*
+ *
+ */
+void delete_histo_iter(histo_iter it);
 
 
 
