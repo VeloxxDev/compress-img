@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "image.h"
-#include "histo.h"
+#include "../include/image.h"
+#include "../include/histo.h"
 
 
 cell_t* create_cell(int B, cell_t *next) {
@@ -47,31 +47,30 @@ void insert_cell(cell_t **head, int B) {
     }
 }
 
-/* petit problèmes la dedans, surement des 
-    fuites memoires
+/* Ne pas oublier d'affecter la première
+    cellule à NULL après avoir appelé
+    la fonction delete
 */
 void delete_list(cell_t *head) {
     cell_t *current;
-    cell_t *del;
+    cell_t *next;
     current = head;
 
-    while (current->next != NULL) {
-        del = current;
-        current = current->next;
-        free(del);
+    while (current != NULL) {
+        next = current->next;
+        free(current);
+        current = next;
     }
-    // free(current);
 }
 
 /* Fonction temporaire pour pouvoir verif
 et tester les modifs de liste
-a modif pour les listes vides
 */
 void afficher(cell_t *head) {
     cell_t *current = head;
 
     if (head == NULL) {
-        printf("Liste inexistante");
+        printf("Liste inexistante\n");
         return;
     }
 
@@ -94,12 +93,14 @@ int main() {
 
     insert_cell(&head, 4);
     insert_cell(&head, 1);
+    insert_cell(&head, 1);
     printf("\n\n\n");
 
     afficher(head);
 
-    //delete_list(head);
-    //afficher(head);
+    delete_list(head);
+    head = NULL;
+    afficher(head);
 
     return 0;
 }
