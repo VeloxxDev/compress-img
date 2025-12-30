@@ -225,12 +225,13 @@ histo_iter create_histo_iter(histo_t h) {
     return NULL;
 }
 
-void start_histo_iter(histo_iter it) {
-    /* 
-     * @TODO Impossible à implémenter pour l'instant car on ne 
-     * sauvegarde nul part la postion initiale...
-     */
-}
+
+// void start_histo_iter(histo_iter it) {
+     /* 
+      * @TODO Impossible à implémenter pour l'instant car on ne 
+      * sauvegarde nul part la postion initiale...
+      */
+// }
 
 
 void give_color_histo_iter(histo_iter it,int* tab) {
