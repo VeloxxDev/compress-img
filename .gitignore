@@ -2,3 +2,5 @@
 *.exe
 *.out
 histo
+bin/
+image_folder/
