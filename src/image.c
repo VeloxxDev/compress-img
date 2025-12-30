@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "image.h"
+#include "../include/image.h"
 
 Image* init_image() {
     Image* image = malloc(sizeof(Image));

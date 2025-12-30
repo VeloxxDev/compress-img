@@ -18,7 +18,7 @@ struct cell_s {
 /*
  *  Histo structure.
  */
-typedef cell_t* histo_t;
+typedef cell_t*** histo_t;
 
 
 /*
@@ -62,7 +62,7 @@ histo_t create_histo();
 /*
  * @func Initialisation of the histogram.
  */
-//void init_histo(histo_t h, Image *img);
+void init_histo(histo_t h, Image *img);
 
 /*
  * func Suppression of histo.

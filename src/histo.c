@@ -80,28 +80,47 @@ void afficher(cell_t *head) {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
-    cell_t *head = create_cell(2, NULL);
-
-    cell_t *suiv = create_cell(7, NULL);
-    suiv->freq = 3;
-
-    head->next = suiv;
+    if (argc != 2) {
+        printf("Usage: %s image.ppm\n", argv[0]);
+        return 1;
+    }
     
-    afficher(head);
+    // Charge image
+    Image* img = load_pnm(fopen(argv[1], "rb"));
+    if (!img) {
+        printf("Erreur chargement %s\n", argv[1]);
+        return 1;
+    }
 
-    insert_cell(&head, 4);
-    insert_cell(&head, 1);
-    insert_cell(&head, 1);
-    printf("\n\n\n");
-
-    afficher(head);
-
-    delete_list(head);
-    head = NULL;
-    afficher(head);
-
+    printf("Image %dx%d chargée\n", img->width, img->height);
+    
+    // Crée et remplit histogramme
+    histo_t h = create_histo();
+    init_histo(h, img);
+    
+    // Test quelques cellules
+    printf("\n=== Exemples de cellules ===\n");
+    afficher(h[0][0]);    // Coin supérieur gauche
+    afficher(h[255][255]); // Coin inférieur droit
+    
+    // Compte total pixels
+    int total = 0;
+    for (int r = 0; r < 256; r++) {
+        for (int g = 0; g < 256; g++) {
+            cell_t* cell = h[r][g];
+            while (cell) {
+                total += cell->freq;
+                cell = cell->next;
+            }
+        }
+    }
+    printf("\nTotal pixels comptés: %d (attendu: %d)\n", 
+           total, img->width * img->height);
+    
+    delete_histo(h);
+    free_image(img);
     return 0;
 }
 
@@ -119,24 +138,30 @@ int main() {
 // /* ============= Fonctions Histo (Yann) =============== */
 
 histo_t create_histo() {
-    histo_t h = malloc(256 * sizeof(cell_t*));
+    histo_t h = (cell_t***)malloc(256 * sizeof(cell_t**));
+    if (h == NULL)
+        return NULL;
 
     for (int r = 0; r < 256; r++) {
-        h[r] = malloc(256 * sizeof(cell_t*));
+        h[r] = (cell_t**)malloc(256 * sizeof(cell_t*));
         for (int g = 0; g < 256; g++) {
             h[r][g] = NULL;
         }
     }
-
     return h;
 }
+
 void init_histo(histo_t h,Image* image) {
+    int index;
+
     for (int i = 0; i < image->height; i++) {
         for (int j = 0; j < image->width; j++) {
 
-            unsigned char R = image->pixels[i][j].R;
-            unsigned char G = image->pixels[i][j].G;
-            unsigned char B = image->pixels[i][j].B;
+            index = (i * image->width + j)*3;
+
+            unsigned char R = image->pixels[index];
+            unsigned char G = image->pixels[index + 1];
+            unsigned char B = image->pixels[index + 2];
 
             insert_cell(&h[R][G], B);
         }
