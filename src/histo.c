@@ -178,25 +178,26 @@ void delete_histo(histo_t h) {
     free(h);
 }
 
-// int give_freq_histo(histo_t h,int R,int G,int B) {
-//     if (h[R][G] == NULL) {
-//         return 0;
-//     }
+int give_freq_histo(histo_t h, int R, int G, int B) {
+    
+    if (h[R][G] == NULL) {
+        return 0;
+    }
 
-//     cell_t* current;
-//     current = h[R][G];
-//     while (current != NULL) {
-//         if (current -> B == B) {
-//             return current.freq;
-//         }
-//         if (current -> B > B) {
-//             return 0;
-//         }
-//         current = current -> next;
+    cell_t* current;
+    current = h[R][G];
+    while (current != NULL) {
+        if (current -> B == B) {
+            return current->freq;
+        }
+        if (current -> B > B) {
+            return 0;
+        }
+        current = current -> next;
         
-//     }
-//     return 0;
-// }
+    }
+    return 0;
+}
 
 // /* ======= Partie histo_iter ========= */
 
