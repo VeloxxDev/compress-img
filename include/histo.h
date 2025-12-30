@@ -2,7 +2,7 @@
 #define HISTO
 
 #include <stdio.h>
-//#include <image.h>
+#include "image.h"
 
 /*
  *  Cells structure for the histogram
@@ -87,8 +87,7 @@ void start_histo_iter(histo_iter it);
 /*
  *
  */
-boolean next_histo_iter(histo_iter it);
-
+boolean next_histo_iter(histo_iter it, histo_t h);
 
 /*
  *
