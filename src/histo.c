@@ -118,38 +118,40 @@ int main() {
 
 // /* ============= Fonctions Histo (Yann) =============== */
 
-// histo_t create_histo() {
-//     histo_t h = malloc(256 * sizeof(cell_t**));
+histo_t create_histo() {
+    histo_t h = malloc(256 * sizeof(cell_t*));
 
-//     for (int r = 0; r < 256; r++) {
-//         h[r] = malloc(256 * sizeof(cell_t*));
-//         for (int g = 0; g < 256; g++) {
-//             h[r][g] = NULL;
-//         }
-//     }
+    for (int r = 0; r < 256; r++) {
+        h[r] = malloc(256 * sizeof(cell_t*));
+        for (int g = 0; g < 256; g++) {
+            h[r][g] = NULL;
+        }
+    }
 
-//     return h;
-// }
-// void init_histo(histo_t h,Image* image) {
-//     for (int i = 0; i < image->height; i++) {
-//         for (int j = 0; j < image->width; j++) {
+    return h;
+}
+void init_histo(histo_t h,Image* image) {
+    for (int i = 0; i < image->height; i++) {
+        for (int j = 0; j < image->width; j++) {
 
-//             unsigned char R = image->pixels[i][j].R;
-//             unsigned char G = image->pixels[i][j].G;
-//             unsigned char B = image->pixels[i][j].B;
+            unsigned char R = image->pixels[i][j].R;
+            unsigned char G = image->pixels[i][j].G;
+            unsigned char B = image->pixels[i][j].B;
 
-//             insert_cell(&h[R][G], B);
-//         }
-//     }
-// }
+            insert_cell(&h[R][G], B);
+        }
+    }
+}
 
-// void delete_histo(histo_t h) {
-//     for (int r=0;r<256;r++) {
-//         for (int g=0;g<256;g++) {
-//             delete_list(h[r][g]);
-//         }
-//     }
-// }
+void delete_histo(histo_t h) {
+    for (int r=0;r<256;r++) {
+        for (int g=0;g<256;g++) {
+            delete_list(h[r][g]);
+            h[r][g] = NULL;
+        }
+    }
+    free(h);
+}
 
 // int give_freq_histo(histo_t h,int R,int G,int B) {
 //     if (h[R][G] == NULL) {
