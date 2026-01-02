@@ -31,4 +31,8 @@ void free_image(Image* img);
 
 typedef void (*pixel_loader_t)(FILE*, Image*);
 
+int save_pnm(const Image* img, FILE* fout);
+
+Image* create_image(int width, int height);
+
 #endif

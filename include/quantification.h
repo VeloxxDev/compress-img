@@ -14,4 +14,6 @@
 
 void quantification(histo_t h, int *tab, int K);
 
+void mapping(Image *in, Image *out, int* tab, int K);
+
 #endif

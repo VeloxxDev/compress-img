@@ -27,4 +27,5 @@ tests: $(TEST_HISTO_OBJ) $(BIN_DIR)/histo.o $(BIN_DIR)/image.o
 	./test_histo
 
 clean:
-	rm -f $(BIN_DIR)/*.o main test_histo
+	rm -f $(BIN_DIR)/*.o main test_histo *.ppm
+	
