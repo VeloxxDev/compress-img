@@ -148,20 +148,20 @@ int nearest_color(int R, int G, int B, int *tab, int K) {
     return best; 
 }
 
-void mapping(Image in, Image out, int* tab, int K) {
+void mapping(Image *in, Image *out, int* tab, int K) {
 
     for (int y = 0; y < in->height; y++) {
         for (int x = 0; x < in->width; x++) {
 
-            int R = in->data[(y* in->width + x)*3 + 0];
-            int G = in->data[(y* in->width + x)*3 + 1];
-            int B = in->data[(y* in->width + x)*3 + 2];
+            int R = in->pixels[(y*in->width + x)*3 + 0];
+            int G = in->pixels[(y*in->width + x)*3 + 1];
+            int B = in->pixels[(y*in->width + x)*3 + 2];
 
             int idx = nearest_color(R, G, B, tab, K);
 
-            out->data[(y* out->width + x)*3 + 0] = tab[idx*3 + 0];
-            out->data[(y* out->width + x)*3 + 1] = tab[idx*3 + 1];
-            out->data[(y* out->width + x)*3 + 2] = tab[idx*3 + 2];
+            out->pixels[(y*out->width + x)*3 + 0] = tab[idx*3 + 0];
+            out->pixels[(y*out->width + x)*3 + 1] = tab[idx*3 + 1];
+            out->pixels[(y*out->width + x)*3 + 2] = tab[idx*3 + 2];
         }
     }
 }

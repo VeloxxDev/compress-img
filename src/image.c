@@ -12,6 +12,21 @@ Image* init_image() {
     return image;
 }
 
+Image* create_image(int width, int height) {
+    Image* img = malloc(sizeof(Image));
+    if (!img) return NULL;
+
+    strcpy(img->magic, "P6");
+    img->width = width;
+    img->height = height;
+    img->max = 255;
+
+    size_t count = width * height * 3;
+    img->pixels = calloc(count, 1);
+
+    return img;
+}
+
 void load_header(FILE* fin, Image* image) {
     char line[256];
 
@@ -125,4 +140,45 @@ void free_image(Image* img) {
         return;
     free(img->pixels);
     free(img);
+}
+
+int save_pnm(const Image* img, FILE* fout) {
+    if (!img || !fout) {
+        fprintf(stderr, "save_pnm : paramètres invalides\n");
+        return -1;
+    }
+
+    /* --- Écriture de l'en-tête --- */
+    fprintf(fout, "%s\n", img->magic);
+    fprintf(fout, "%d %d\n", img->width, img->height);
+    fprintf(fout, "%d\n", img->max);
+
+    int channels = 0;
+
+    if (strcmp(img->magic, "P2") == 0 || strcmp(img->magic, "P5") == 0)
+        channels = 1;   // PGM
+    else if (strcmp(img->magic, "P3") == 0 || strcmp(img->magic, "P6") == 0)
+        channels = 3;   // PPM
+    else {
+        fprintf(stderr, "save_pnm : format non supporté (%s)\n", img->magic);
+        return -1;
+    }
+
+    size_t count = img->width * img->height * channels;
+
+    /* --- ASCII --- */
+    if (strcmp(img->magic, "P2") == 0 || strcmp(img->magic, "P3") == 0) {
+        for (size_t i = 0; i < count; i++) {
+            fprintf(fout, "%d ", img->pixels[i]);
+            if ((i + 1) % (img->width * channels) == 0)
+                fprintf(fout, "\n");
+        }
+    }
+
+    /* --- Binaire --- */
+    else if (strcmp(img->magic, "P5") == 0 || strcmp(img->magic, "P6") == 0) {
+        fwrite(img->pixels, 1, count, fout);
+    }
+
+    return 0;
 }
