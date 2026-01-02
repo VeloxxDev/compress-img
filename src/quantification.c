@@ -92,11 +92,22 @@ void quantification(histo_t h, int* tab, int K) {
 
     list = NULL;
     it = create_histo_iter(h);
+    if (it == NULL) {
+        perror("create_histo");
+        return;
+    }
     count = 0;
+    
+    /* Prise en compte du premier élément*/
+    give_color_histo_iter(it, color);
+    freq = give_freq_histo(h, color[0], color[1], color[2]);
+    insert_by_ascending_sort(&list, color[0], color[1], color[2], freq);
+    count++;
+
 
     while (next_histo_iter(it, h) && count < K) {
         give_color_histo_iter(it, color);
-        freq = it->current->freq;
+        freq = give_freq_histo(h,color[0],color[2],color[3]);
 
         insert_by_ascending_sort(&list, color[0], color[1], color[2], freq);
         count++;
@@ -104,7 +115,7 @@ void quantification(histo_t h, int* tab, int K) {
 
     while (next_histo_iter(it, h)) {
         give_color_histo_iter(it, color);
-        freq = it->current->freq;
+        freq = give_freq_histo(h,color[0],color[2],color[3]);
 
         if (list != NULL && freq > list->f) {
             delete_head(&list);
@@ -116,4 +127,41 @@ void quantification(histo_t h, int* tab, int K) {
 
     delete_histo_iter(it);
     delete_list_l(list);
+}
+
+int nearest_color(int R, int G, int B, int *tab, int K) {
+    int best = 0;
+    int best_dist = 999999999;
+
+    for (int i = 0; i < K; i++) {  // Distance Euclidienne 
+        int dR = R - tab[i*3 + 0];
+        int dG = G - tab[i*3 + 1];
+        int dB = B - tab[i*3 + 2];
+
+        int dist = dR*dR + dG*dG + dB*dB;
+
+        if (dist < best_dist) {
+            best_dist = dist;
+            best = i;
+        }
+    }
+    return best; 
+}
+
+void mapping(Image in, Image out, int* tab, int K) {
+
+    for (int y = 0; y < in->height; y++) {
+        for (int x = 0; x < in->width; x++) {
+
+            int R = in->data[(y* in->width + x)*3 + 0];
+            int G = in->data[(y* in->width + x)*3 + 1];
+            int B = in->data[(y* in->width + x)*3 + 2];
+
+            int idx = nearest_color(R, G, B, tab, K);
+
+            out->data[(y* out->width + x)*3 + 0] = tab[idx*3 + 0];
+            out->data[(y* out->width + x)*3 + 1] = tab[idx*3 + 1];
+            out->data[(y* out->width + x)*3 + 2] = tab[idx*3 + 2];
+        }
+    }
 }
