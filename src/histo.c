@@ -115,6 +115,8 @@ void delete_histo(histo_t h) {
             delete_list(h[r][g]);
             h[r][g] = NULL;
         }
+        free(h[r]);
+        h[r] = NULL;
     }
     free(h);
 }
