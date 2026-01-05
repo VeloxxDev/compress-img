@@ -4,13 +4,13 @@ Image Compression — ENSICAEN
 Overview
 --------
 
-This project implements RGB histogram computation, popularity-based color quantization, and pixel mapping to a reduced color palette. It demonstrates algorithmic rigor, memory-safe C programming, and clear documentation practices.
+This project implements RGB histogram computation, popularity-based color quantification, and pixel mapping to a reduced color palette. It demonstrates algorithmic rigor, memory-safe C programming, and clear documentation practices.
 
 Main Objectives:
 - Compute RGB histograms from PPM images
-- Perform color quantization using the popularity algorithm
+- Perform color quantification using the popularity algorithm
 - Map image pixels to the most frequent colors
-- Generate quantized output images with statistics
+- Generate quantified output images with statistics
 
 Key Features:
 - 256×256 histogram structure for 2D color tracking (Red-Green channels)
@@ -58,7 +58,7 @@ The compiled binaries will be in the current directory: `main` and `ppmhist`.
 Usage
 -----
 
-### Main program - Image compression with quantization
+### Main program - Image compression with quantification
 
 ```bash
 ./main K input.ppm
@@ -67,7 +67,7 @@ Usage
 This will:
 1. Load the image from `input.ppm` (PPM/PGM format)
 2. Compute RGB histograms
-3. Perform color quantization (K most frequent colors)
+3. Perform color quantification (K most frequent colors)
 4. Map pixels to the reduced palette
 5. Save the output as `output.ppm`
 
