@@ -46,5 +46,12 @@ $(BIN_DIR)/ppmhist.o: src/ppmhist.c
 
 # --- Nettoyage ---
 clean:
-	rm -f $(BIN_DIR)/*.o main ppmhist test_histo *.ppm
+	rm -rf $(BIN_DIR) main ppmhist test_histo *.ppm
 	
+
+# --- Documentation Doxygen ---
+doc:
+	doxygen Doxyfile
+
+docclean:
+	rm -rf doc/
