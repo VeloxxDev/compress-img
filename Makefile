@@ -34,7 +34,7 @@ tests: $(TEST_HISTO_OBJ) $(BIN_DIR)/histo.o $(BIN_DIR)/image.o
 
 
 # --- Compilation de ppmhist.c ---
-ppmhist: $(BIN_DIR)/histo.o $(BIN_DIR)/image.o $(BIN_DIR)/quantification.o $(BIN_DIR)/mapping.o $(BIN_DIR)/ppmhist.o
+ppmhist: $(BIN_DIR)/histo.o $(BIN_DIR)/image.o $(BIN_DIR)/quantification.o $(BIN_DIR)/ppmhist.o
 	$(CC) $(CFLAGS) $^ -o ppmhist
 
 
