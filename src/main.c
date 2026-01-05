@@ -21,7 +21,6 @@
 
 int main(int argc, char **argv) {
 
-    /* --- Vérification des arguments --- */
     if (argc != 3) {
         printf("Nombre d'arguments incorect");
         return 1;
@@ -33,14 +32,12 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* --- Ouverture du fichier d'entrée --- */
     FILE *f = fopen(argv[2], "r");
     if (!f) {
         perror("Erreur fopen input");
         return 1;
     }
 
-    /* --- Chargement de l'image --- */
     Image *input = load_pnm(f);
     fclose(f);
 
@@ -49,7 +46,6 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* --- Création et initialisation de l'histogramme --- */
     histo_t h = create_histo();
     if (!h) {
         fprintf(stderr, "Erreur create_histo\n");
@@ -59,7 +55,6 @@ int main(int argc, char **argv) {
 
     init_histo(h, input);
 
-    /* --- Allocation de la table des K couleurs --- */
     int *tab = malloc(K * 3 * sizeof(int));
     if (!tab) {
         fprintf(stderr, "Erreur malloc tab\n");
@@ -68,10 +63,8 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* --- Quantification : trouver les K couleurs les plus fréquentes --- */
     quantification(h, tab, K);
 
-    /* --- Création de l'image de sortie --- */
     Image *output = create_image(input->width, input->height);
     if (!output) {
         fprintf(stderr, "Erreur create_image\n");
@@ -81,10 +74,8 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    /* --- Mapping : remplacer chaque pixel par la couleur la plus proche --- */
     mapping(input, output, tab, K);
 
-    /* --- Sauvegarde de l'image de sortie --- */
     FILE *out = fopen("output.ppm", "w");
     if (!out) {
         perror("Erreur fopen output");
@@ -98,7 +89,6 @@ int main(int argc, char **argv) {
     save_pnm(output, out);
     fclose(out);
 
-    /* --- Nettoyage mémoire --- */
     free(tab);
     delete_histo(h);
     free_image(input);

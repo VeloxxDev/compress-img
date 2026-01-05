@@ -19,13 +19,11 @@
 #include "../include/histo.h"
 #include "../include/image.h"
 
-/* Setup / Teardown */
+
 void test_setup(void) { }
 void test_teardown(void) { }
 
-/*
-   TESTS LISTES CHAÎNÉES
- */
+
 
 MU_TEST(test_create_cell) {
     cell_t *c = create_cell(42, NULL);
@@ -53,9 +51,7 @@ MU_TEST(test_insert_cell) {
     delete_list(head);
 }
 
-/*
-   TESTS HISTOGRAMME
- */
+
 
 static Image *fake_image() {
     Image *img = malloc(sizeof(Image));
@@ -93,9 +89,7 @@ MU_TEST(test_init_histo) {
     free(img);
 }
 
-/*
-   TESTS ITÉRATEUR
-*/
+
 
 MU_TEST(test_histo_iter) {
     Image *img = malloc(sizeof(Image));
@@ -130,9 +124,7 @@ MU_TEST(test_histo_iter) {
     free(img);
 }
 
-/*
-   SUITE DE TESTS
-*/
+
 
 MU_TEST_SUITE(histo_suite) {
     MU_SUITE_CONFIGURE(&test_setup, &test_teardown);
@@ -146,9 +138,7 @@ MU_TEST_SUITE(histo_suite) {
     MU_RUN_TEST(test_histo_iter);
 }
 
-/*
-   MAIN
-*/
+
 
 int main() {
     MU_RUN_SUITE(histo_suite);
