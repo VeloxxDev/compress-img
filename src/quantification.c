@@ -3,22 +3,25 @@
 #include "../include/histo.h"
 #include "../include/quantification.h"
 
+/**
+ * @brief Color cell for quantification list
+ */
 typedef struct cell_l {
-    unsigned char R;
-    unsigned char G;
-    unsigned char B;
-    int f;
-    struct cell_l *next;
+    unsigned char R; /*!< Red component of the color */
+    unsigned char G; /*!< Green component of the color */
+    unsigned char B; /*!< Blue component of the color */
+    int f; /*!< Frequency of this color */
+    struct cell_l *next; /*!< Pointer to the next cell in the list */
 } cell_l;
 
-/*
- * @func inserts a color cell in descending frequency order
+/**
+ * @brief inserts a color cell in descending frequency order
  * @param head is the address of the list head
  * @param R is the red value
  * @param G is the green value
  * @param B is the blue value
  * @param f is the frequency
- * @ret void
+ * @return void
  */
 void insert_by_ascending_sort(cell_l **head, int R, int G, int B, int f) {
 
@@ -48,10 +51,10 @@ void insert_by_ascending_sort(cell_l **head, int R, int G, int B, int f) {
     }
 }
 
-/*
- * @func deletes the head element of the list
+/**
+ * @brief deletes the head element of the list
  * @param head is the address of the list head
- * @ret void
+ * @return void
  */
 void delete_head(cell_l **head) {
 
@@ -65,12 +68,12 @@ void delete_head(cell_l **head) {
     free(del);
 }
 
-/*
- * @func copies K colors from list to array
+/**
+ * @brief copies K colors from list to array
  * @param list is the color list
  * @param tab is the destination array of size K*3
  * @param K is the number of colors to copy
- * @ret void
+ * @return void
  */
 void copy_to_tab(cell_l *list, int *tab, int K) {
 
@@ -90,10 +93,10 @@ void copy_to_tab(cell_l *list, int *tab, int K) {
     }
 }
 
-/*
- * @func deletes the entire color list
+/**
+ * @brief deletes the entire color list
  * @param head is the list head
- * @ret void
+ * @return void
  */
 void delete_list_l(cell_l *head) {
 
@@ -155,14 +158,14 @@ void quantification(histo_t h, int* tab, int K) {
     delete_list_l(list);
 }
 
-/*
- * @func finds the nearest color in palette using Euclidean distance
+/**
+ * @brief finds the nearest color in palette using Euclidean distance
  * @param R is the red value
  * @param G is the green value
  * @param B is the blue value
  * @param tab is the color palette array of K*3 colors
  * @param K is the number of colors in palette
- * @ret index of the nearest color in the palette
+ * @return index of the nearest color in the palette
  */
 int nearest_color(int R, int G, int B, int *tab, int K) {
     int best = 0;
@@ -183,13 +186,13 @@ int nearest_color(int R, int G, int B, int *tab, int K) {
     return best; 
 }
 
-/*
- * @func maps input image colors to nearest palette colors
+/**
+ * @brief maps input image colors to nearest palette colors
  * @param in is the input image
  * @param out is the output image
  * @param tab is the color palette array of K*3 colors
  * @param K is the number of colors in palette
- * @ret void
+ * @return void
  */
 void mapping(Image *in, Image *out, int* tab, int K) {
 

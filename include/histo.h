@@ -4,128 +4,134 @@
 #include <stdio.h>
 #include "image.h"
 
-/*
- *  Cells structure for the histogram
+/**
+ * @brief Cell for histogram list
  */
 typedef struct cell_s cell_t;
 struct cell_s {
-    unsigned char B;
-    int freq;
-    struct cell_s *next;
+    unsigned char B; /*!< Blue value of the color */
+    int freq; /*!< Frequency of this color in the histogram */
+    struct cell_s *next; /*!< Pointer to the next cell in the list */
 };
 
 
-/*
- *  Histo structure.
+/**
+ * @brief 2D histogram structure (256x256 array of cell pointers)
  */
 typedef cell_t*** histo_t;
 
 
-/*
- * Structure of histo_iter_s and his pointeur histo_iter bellow.
+/**
+ * @brief Iterator for histogram traversal
  */
 typedef struct histo_iter_s {
-    int R;
-    int G;
-    cell_t *current;
+    int R; /*!< Red coordinate in the histogram */
+    int G; /*!< Green coordinate in the histogram */
+    cell_t *current; /*!< Current cell in the traversal */
 } histo_iter_s;
 
+/**
+ * @brief Pointer to histogram iterator
+ */
 typedef histo_iter_s* histo_iter;
 
+/**
+ * @brief Boolean type for true/false values
+ */
 typedef enum {false,true} boolean;
 
 
-/*
- *  @func This function creates a new cell
+/**
+ *  @brief This function creates a new cell
  *  @param B is a int wich represents the value for blue in 
  *   the cell
- *  @ret a pointer to the new cell
+ *  @return a pointer to the new cell
  */
 cell_t* create_cell(int B, cell_t *next);
 
-/*
- * @func inserts a cell in sorted order, or increments frequency if exists
+/**
+ * @brief inserts a cell in sorted order, or increments frequency if exists
  * @param head is the address of the head of the list
  * @param B is the blue value to insert
- * @ret void
+ * @return void
  */
 void insert_cell(cell_t **head, int B);
 
 
-/*
- * @func deletes a liste
+/**
+ * @brief deletes a liste
  * @param cell_t is the head of the list to deletes
- * @ret void
+ * @return void
  */
 void delete_list(cell_t *head);
 
 
-/*
- * @func creates a 256x256 histogram
+/**
+ * @brief creates a 256x256 histogram
  * @param none
- * @ret pointer to the new histogram
+ * @return pointer to the new histogram
  */
 histo_t create_histo();
 
-/*
- * @func Initialisation of the histogram with image data
+/**
+ * @brief Initialisation of the histogram with image data
  * @param h is the histogram to initialize
  * @param img is the image to process
- * @ret void
+ * @return void
  */
 void init_histo(histo_t h, Image *img);
 
-/*
- * @func Suppression of histo
+/**
+ * @brief Suppression of histo
  * @param h is the histogram to delete
- * @ret void
+ * @return void
  */
 void delete_histo(histo_t h);
 
-/*
- * @func gives frequency of a color in histogram
+/**
+ * @brief gives frequency of a color in histogram
  * @param h is the histogram
  * @param R is the red value
  * @param G is the green value
  * @param B is the blue value
- * @ret frequency of the color
+ * @return frequency of the color
  */
 int give_freq_histo(histo_t h,int R, int G, int B); 
 
-/*
- * @func creates an iterator for the histogram
+/**
+ * @brief creates an iterator for the histogram
  * @param h is the histogram to iterate
- * @ret pointer to the new iterator
+ * @return pointer to the new iterator
  */
 histo_iter create_histo_iter(histo_t h);
 
-/*
- * @func initializes the iterator to start position
+/**
+ * @brief initializes the iterator to start position
  * @param it is the iterator to initialize
- * @ret void
+ * @return void
  */
 void start_histo_iter(histo_iter it);
 
-/*
- * @func moves to next element in histogram
+/**
+ * @brief moves to next element in histogram
  * @param it is the iterator
  * @param h is the histogram
- * @ret true if next element exists, false otherwise
+ * @return true if next element exists, false otherwise
  */
 boolean next_histo_iter(histo_iter it, histo_t h);
 
-/*
- * @func gets the color at current iterator position
+/**
+ * @brief gets the color at current iterator position
  * @param it is the iterator
  * @param tab is an array of size 3 to store RGB values
- * @ret void
+ * @return void
  */
 void give_color_histo_iter(histo_iter it, int *tab);
 
-/*
- * @func deletes the histogram iterator
+/**
+ * @brief deletes the histogram iterator
  * @param it is the iterator to delete
- * @ret void
+ * @return void
  */
 void delete_histo_iter(histo_iter it);
 
