@@ -155,7 +155,7 @@ void quantification(histo_t h, int* tab, int K) {
 
     while (next_histo_iter(it, h) && count < K) {
         give_color_histo_iter(it, color);
-        freq = give_freq_histo(h,color[0],color[2],color[3]);
+        freq = give_freq_histo(h,color[0],color[1],color[2]);
 
         insert_by_ascending_sort(&list, color[0], color[1], color[2], freq);
         count++;
@@ -163,7 +163,7 @@ void quantification(histo_t h, int* tab, int K) {
 
     while (next_histo_iter(it, h)) {
         give_color_histo_iter(it, color);
-        freq = give_freq_histo(h,color[0],color[2],color[3]);
+        freq = give_freq_histo(h,color[0],color[1],color[2]);
 
         if (list != NULL && freq > list->f) {
             delete_head(&list);
