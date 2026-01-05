@@ -1,3 +1,18 @@
+/*
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
+
+/**
+ * @author VeloxxDev
+ * @author Co-auteur
+ * @version 1.5.7 - 05/01/2025
+ */
+
+/** 
+ * @file histo.h
+ */
+
 #ifndef HISTO
 #define HISTO
 
