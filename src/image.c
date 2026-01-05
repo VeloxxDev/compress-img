@@ -168,7 +168,6 @@ int save_pnm(const Image* img, FILE* fout) {
         return -1;
     }
 
-    /* --- Écriture de l'en-tête --- */
     fprintf(fout, "%s\n", img->magic);
     fprintf(fout, "%d %d\n", img->width, img->height);
     fprintf(fout, "%d\n", img->max);
@@ -186,7 +185,6 @@ int save_pnm(const Image* img, FILE* fout) {
 
     size_t count = img->width * img->height * channels;
 
-    /* --- ASCII --- */
     if (strcmp(img->magic, "P2") == 0 || strcmp(img->magic, "P3") == 0) {
         for (size_t i = 0; i < count; i++) {
             fprintf(fout, "%d ", img->pixels[i]);
@@ -195,7 +193,6 @@ int save_pnm(const Image* img, FILE* fout) {
         }
     }
 
-    /* --- Binaire --- */
     else if (strcmp(img->magic, "P5") == 0 || strcmp(img->magic, "P6") == 0) {
         fwrite(img->pixels, 1, count, fout);
     }

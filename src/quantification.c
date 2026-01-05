@@ -147,7 +147,6 @@ void quantification(histo_t h, int* tab, int K) {
     }
     count = 0;
     
-    /* Prise en compte du premier élément*/
     give_color_histo_iter(it, color);
     freq = give_freq_histo(h, color[0], color[1], color[2]);
     insert_by_ascending_sort(&list, color[0], color[1], color[2], freq);
@@ -191,7 +190,7 @@ int nearest_color(int R, int G, int B, int *tab, int K) {
     int best = 0;
     int best_dist = 999999999;
 
-    for (int i = 0; i < K; i++) {  // Distance Euclidienne 
+    for (int i = 0; i < K; i++) {
         int dR = R - tab[i*3 + 0];
         int dG = G - tab[i*3 + 1];
         int dB = B - tab[i*3 + 2];
