@@ -1,3 +1,23 @@
+/*
+ * ENSICAEN
+ * 6 Boulevard Marechal Juin
+ * F-14050 Caen Cedex
+ *
+ * This file is owned by ENSICAEN.
+ * No portion of this document may be reproduced, copied
+ * or revised without written permission of the authors.
+ */
+
+/**
+ * @author Iwan Clemente <iwan.clemente@ecole.ensicaen.fr>
+ * @author Yann Moulin <yann.moulin@ecole.ensicaen.fr>
+ * @version 1.5.7 - 05/01/2025
+ */
+
+/** 
+ * @file main.c
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/image.h"
