@@ -1,7 +1,10 @@
 .vscode
 *.exe
 *.out
-histo
 bin/
 image_folder/
 IMAGES/
+output.ppm
+main
+ppmhist
+test_histo
