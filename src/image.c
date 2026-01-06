@@ -74,6 +74,15 @@ void load_header(FILE* fin, Image* image) {
     } while (line[0] == '#' || line[0] == '\n');
     sscanf(line, "%d", &image -> max);
 
+    if (image->max < 0) {
+        perror("Invalid max value in header.");
+        exit(EXIT_FAILURE);
+    }
+    if (image->max > 255) {
+        perror("Invalid max value in header (must be <= 255).");
+        exit(EXIT_FAILURE);
+    }
+
     image -> pixels = NULL;
 }
 
@@ -87,6 +96,14 @@ void load_pixels_ascii(FILE* fin, Image* image) {
     for (size_t i = 0; i < count; i++) {
         int v;
         fscanf(fin, "%d", &v);
+        
+        if (v < 0 || v > 255) {
+            perror("Invalid pixel value");
+            free(image->pixels);
+            image->pixels = NULL;
+            exit(EXIT_FAILURE);
+        }
+        
         image->pixels[i] = (unsigned char)v;
     }
 }
@@ -99,6 +116,16 @@ void load_pixels_binary(FILE* fin, Image* image) {
     if (!image->pixels) exit(EXIT_FAILURE);
 
     fread(image->pixels, 1, count, fin);
+
+    for (size_t i = 0; i < count; i++) {
+        int v = (unsigned char)image->pixels[i];
+        if (v < 0 || v > 255) {
+            perror("Invalid pixel value");
+            free(image->pixels);
+            image->pixels = NULL;
+            exit(EXIT_FAILURE);
+        }
+    }
 }
 
 pixel_loader_t get_loader(const char* magic) {
