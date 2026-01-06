@@ -1,5 +1,12 @@
 Image Compression
 =============================
+Project Link : https://github.com/VeloxxDev/compress-img.git
+
+Authors
+-------
+
+- **Co-auteur**
+- **VeloxxDev**
 
 Overview
 --------
@@ -148,12 +155,6 @@ Contact & Support
 -----------------
 
 For questions or issues, contact the project authors or review the Doxygen documentation.
-
-Authors
--------
-
-- **Co-auteur**
-- **VeloxxDev**
 
 License
 -------
