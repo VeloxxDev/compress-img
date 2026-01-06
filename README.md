@@ -1,5 +1,12 @@
 Image Compression — ENSICAEN
 =============================
+Project Link : https://github.com/VeloxxDev/compress-img.git
+
+Authors
+-------
+
+- **Yann Moulin** — ENSICAEN, Class of 2028
+- **Iwan Clemente** — ENSICAEN, Class of 2028
 
 Overview
 --------
@@ -148,12 +155,6 @@ Contact & Support
 -----------------
 
 For questions or issues, contact the project authors or review the Doxygen documentation.
-
-Authors
--------
-
-- **Yann Moulin** — ENSICAEN, Class of 2028
-- **Iwan Clemente** — ENSICAEN, Class of 2028
 
 License
 -------
